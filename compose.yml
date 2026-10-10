@@ -1,16 +1,19 @@
+x-temporal-environment: &temporal_envvars
+  TEMPORAL_ADDRESS: "${TEMPORAL_ADDRESS:-temporal:7233}"
+  TEMPORAL_NAMESPACE: "${TEMPORAL_NAMESPACE:-default}"
+  TEMPORAL_API_KEY: "${TEMPORAL_API_KEY:-}"
+  TEMPORAL_TLS: "${TEMPORAL_TLS:-false}"
+
 services:
-  workflow:
+  zigflow:
     build:
       context: .
     environment:
+      <<: *temporal_envvars
       CONVERT_FAILURE_DATA: "${CONVERT_FAILURE_DATA:-false}"
       LOG_LEVEL: "${LOG_LEVEL:-debug}"
-      TEMPORAL_ADDRESS: ${TEMPORAL_ADDRESS:-temporal:7233}
-      TEMPORAL_NAMESPACE: ${TEMPORAL_NAMESPACE:-default}
-      TEMPORAL_API_KEY: ${TEMPORAL_API_KEY:-}
-      TEMPORAL_TLS: ${TEMPORAL_TLS:-false}
     volumes:
-      - ../../:/go/app
+      - ./workflows:/app/workflows:ro
     command:
       - run
       - --watch
@@ -21,6 +24,7 @@ services:
   temporal:
     image: temporalio/temporal
     ports:
+      - 7233:7233
       - 8233:8233
     command: server start-dev --ip 0.0.0.0
     healthcheck:
@@ -28,3 +32,19 @@ services:
       interval: 10s
       timeout: 10s
       retries: 3
+
+  ############
+  # Triggers #
+  ############
+
+  hello-world: &trigger
+    image: temporalio/temporal
+    entrypoint: ""
+    command: sh /workflows/hello-world/trigger.sh
+    environment:
+      <<: *temporal_envvars
+    volumes:
+      - ./workflows:/workflows
+    depends_on:
+      temporal:
+        condition: service_healthy

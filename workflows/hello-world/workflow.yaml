@@ -13,4 +13,4 @@ do:
         as:
           data: ${ . }
       set:
-        message: Hello from Ziggy
+        message: Hello from Zigflow
