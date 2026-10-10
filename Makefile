@@ -1,7 +1,11 @@
-cruft-update:
-ifeq (,$(wildcard .cruft.json))
-	@echo "Cruft not configured"
-else
-	@cruft check || cruft update --skip-apply-ask --refresh-private-variables
-endif
-.PHONY: cruft-update
+dev:
+	@echo "Starting Zigflow workflows in watch mode"
+	@zigflow run \
+		--dir ./workflows \
+		--glob "**/*.{yaml,yml,json}" \
+		--watch
+.PHONY: dev
+
+temporal:
+	@temporal server start-dev
+.PHONY: temporal

@@ -1,11 +1,19 @@
 {
   "image": "ghcr.io/mrsimonemms/devcontainers/full",
   "name": "devcontainer",
-  "features": {},
+  "features": {
+    "ghcr.io/mrsimonemms/devcontainers/zigflow:1": {}
+  },
   "customizations": {
     "vscode": {
       "extensions": [],
       "settings": {}
     }
-  }
+  },
+  "forwardPorts": [
+    3000,
+    7233,
+    8233,
+    9090
+  ]
 }
