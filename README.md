@@ -4,6 +4,7 @@ A blank project for getting started
 
 <!-- toc -->
 
+* [Workflows](#workflows)
 * [Contributing](#contributing)
   * [Open in a container](#open-in-a-container)
   * [Commit style](#commit-style)
@@ -11,6 +12,19 @@ A blank project for getting started
 <!-- Regenerate with "pre-commit run -a markdown-toc" -->
 
 <!-- tocstop -->
+
+## Workflows
+
+Every `.yaml`, `.yml` and `.json` file under `workflows/`, including nested
+directories, is treated as a Zigflow workflow and validated.
+
+Validate them all locally with:
+
+```sh
+make validate
+```
+
+CI validates each file as a separate job.
 
 ## Contributing
 
