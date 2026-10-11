@@ -4,6 +4,7 @@ export default {
     (message) =>
       message.startsWith("deps:") ||
       message.startsWith("deps(") ||
-      message.includes("ci(deps):"),
+      message.includes("ci(deps):") ||
+      message.startsWith("Initial commit"),
   ],
 };
