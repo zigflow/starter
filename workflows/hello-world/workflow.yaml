@@ -5,8 +5,6 @@ document:
   version: 0.0.1
   title: Hello World
   summary: Hello world with Zigflow
-  metadata:
-    display: false
 do:
   - set:
       output:
